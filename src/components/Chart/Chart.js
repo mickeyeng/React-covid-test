@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container } from './Layout'
 import { Bar, Line } from 'react-chartjs-2'
 
-export const Chart = ({ data = [], selectedArea = 'Greenwich' }) => {
+export const Chart = ({ data = [], selectedArea = 'Camden' }) => {
   const [selected, setSelected] = useState([])
 
   // const dates = data.map(data => data.date)
@@ -31,6 +31,11 @@ export const Chart = ({ data = [], selectedArea = 'Greenwich' }) => {
       title: {
         display: true,
         text: selectedArea
+      },
+      tooltip: {
+        title: function (tooltipItems, data) {
+          return data.labels[tooltipItems.index] + ' '
+        }
       }
     }
   }
@@ -43,14 +48,6 @@ export const Chart = ({ data = [], selectedArea = 'Greenwich' }) => {
         // labels: dates,
         labels: selected.map(({ date }) => date),
         datasets: [
-          {
-            data: areaNames,
-            label: 'Area name',
-            backgroundColor: '#255885',
-            borderColor: 'orange',
-            borderWidth: 1
-            // fill: true
-          },
           {
             data: selected.map(({ new_cases }) => new_cases),
             label: 'New Cases',

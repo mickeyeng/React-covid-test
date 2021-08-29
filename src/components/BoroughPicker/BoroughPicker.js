@@ -4,10 +4,12 @@ export const BoroughPicker = ({ data, handleBoroughPicker }) => {
   const selectRef = useRef()
   const boroughList = data && data.map(data => data.area_name)
   const removeDuplicates = [...new Set(boroughList)].map(borough => {
-    return <option>{borough}</option>
+    return (
+      <option defaultValue={borough} key={borough}>
+        {borough}
+      </option>
+    )
   })
-
-  //   let currentArea = null
 
   return (
     <div>

@@ -5,6 +5,7 @@ import './App.css'
 import { Chart } from './components/Chart/Chart'
 import styled from 'styled-components'
 import { BoroughPicker } from './components/BoroughPicker/BoroughPicker'
+import { SearchBar } from './components/SearchBar/SearchBar'
 
 const Container = styled.div`
   display: flex;
@@ -17,6 +18,11 @@ function App() {
   const [selectedArea, setSelectedArea] = useState()
 
   const handleBoroughPicker = value => setSelectedArea(value)
+
+  const handleSearch = value => {
+    console.log('selected area handle', selectedArea)
+    return setSelectedArea(value)
+  }
 
   console.log('selected area', selectedArea)
 
@@ -36,7 +42,7 @@ function App() {
         return error + 'Error with csv, please try again'
       }
     })
-  }, [])
+  }, [selectedArea])
 
   console.log('data', data)
 
@@ -45,6 +51,7 @@ function App() {
       <div className='App'>
         <h1>COVID VISUALIZATION</h1>
         <BoroughPicker handleBoroughPicker={handleBoroughPicker} data={data} />
+        <SearchBar handleSearch={handleSearch} data={data} />
         <Chart selectedArea={selectedArea} data={data} />
       </div>
     </Container>
