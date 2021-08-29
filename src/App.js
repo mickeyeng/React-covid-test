@@ -14,6 +14,11 @@ const Container = styled.div`
 
 function App() {
   const [data, setData] = useState([])
+  const [selectedArea, setSelectedArea] = useState()
+
+  const handleBoroughPicker = value => setSelectedArea(value)
+
+  console.log('selected area', selectedArea)
 
   useEffect(() => {
     readRemoteFile(dataCSV, {
@@ -39,8 +44,8 @@ function App() {
     <Container>
       <div className='App'>
         <h1>COVID VISUALIZATION</h1>
-        <BoroughPicker data={data} />
-        <Chart data={data} />
+        <BoroughPicker handleBoroughPicker={handleBoroughPicker} data={data} />
+        <Chart selectedArea={selectedArea} data={data} />
       </div>
     </Container>
   )

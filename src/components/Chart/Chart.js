@@ -2,15 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { Container } from './Layout'
 import { Bar, Line } from 'react-chartjs-2'
 
-export const Chart = ({ data = [] }) => {
+export const Chart = ({ data = [], selectedArea = 'Greenwich' }) => {
   const [selected, setSelected] = useState([])
 
   // const dates = data.map(data => data.date)
   const areaNames = data.map(data => data.area_name)
-  const totalCases = data.map(data => data.total_cases)
-  const newCases = data.map(data => data.new_cases)
 
-  const selectArea = (input = 'Greenwich') => {
+  const selectArea = input => {
     if (data) {
       const selectedData = data.filter(data => {
         return data.area_name === input
@@ -21,17 +19,21 @@ export const Chart = ({ data = [] }) => {
   }
 
   useEffect(() => {
-    selectArea()
+    selectArea(selectedArea)
   }, [data])
 
   console.log('selected', selected)
 
   const options = {
     responsive: true,
-    maintainAspectRation: false
+    maintainAspectRation: false,
+    plugins: {
+      title: {
+        display: true,
+        text: selectedArea
+      }
+    }
   }
-
-  console.log('selected[0]', selected[0])
 
   const lineChart = data ? (
     <Line
@@ -39,7 +41,7 @@ export const Chart = ({ data = [] }) => {
       width='600px'
       data={{
         // labels: dates,
-        labels: selected.map(data => data.date),
+        labels: selected.map(({ date }) => date),
         datasets: [
           {
             data: areaNames,
@@ -50,7 +52,7 @@ export const Chart = ({ data = [] }) => {
             // fill: true
           },
           {
-            data: selected.map(data => data.new_cases),
+            data: selected.map(({ new_cases }) => new_cases),
             label: 'New Cases',
             backgroundColor: 'red',
             borderColor: 'red',
@@ -58,7 +60,7 @@ export const Chart = ({ data = [] }) => {
             fill: false
           },
           {
-            data: selected.map(data => data.total_cases),
+            data: selected.map(({ total_cases }) => total_cases),
             label: 'Total Cases',
             backgroundColor: 'blue',
             borderWidth: 1,
