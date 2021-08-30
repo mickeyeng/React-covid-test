@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react'
-import { parse, readRemoteFile } from 'react-papaparse'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { readRemoteFile } from 'react-papaparse'
 import dataCSV from './data/phe_cases_london_boroughs.csv'
 import './App.css'
 import { Chart } from './components/Chart/Chart'
@@ -22,6 +22,7 @@ function App() {
   const [selected, setSelected] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [selectDate, setSelectDate] = useState()
+  const dateRef = useRef()
   let totalCases
 
   const filterDateByNumber = (data = [], n) => {
@@ -37,19 +38,39 @@ function App() {
     totalCases = selected[selected.length - 1].total_cases
   }
 
-  console.log('total cases', totalCases)
+  const handleFilterDate = e => {
+    switch (e.target.selectedIndex) {
+      case 0:
+        break
+      case 1:
+        selected && setFilteredData(filterDateByNumber(selected, 7))
+        break
+      case 2:
+        selected && setFilteredData(filterDateByNumber(selected, 30))
+        break
+      case 3:
+        selected && setFilteredData(filterDateByNumber(selected, 90))
+        break
+      default:
+        return null
+    }
+    setSelectDate(e.target.selectedIndex)
+  }
 
   const selectArea = input => {
     if (data) {
       const selectedData = data.filter(data => {
         return data.area_name === input
       })
-      console.log('selected data', selectedData)
+      dateRef.current.selectedIndex = 0
       return setSelected(selectedData)
     }
   }
 
-  const handleBoroughPicker = value => setSelectedArea(value)
+  const handleBoroughPicker = value => {
+    setSelectedArea(value)
+    return setSelectDate(0)
+  }
 
   const handleSearch = value => {
     console.log('selected area handle', selectedArea)
@@ -66,8 +87,6 @@ function App() {
         skipEmptyLines: true,
         dynamicTyping: true,
         encoding: true,
-        // That's what streaming is for. Specify a step callback to receive the results row-by-row. This way, you won't load the whole file into memory and crash the browser.
-        // step: results => setData(results.data),
         complete: results => {
           setData(results.data)
         },
@@ -80,8 +99,6 @@ function App() {
     }
     selectArea(selectedArea)
   }, [selectedArea])
-
-  console.log('data', data)
 
   return (
     <Container>
@@ -97,26 +114,11 @@ function App() {
           handleBoroughPicker={handleBoroughPicker}
         />
         <SearchBar handleSearch={handleSearch} data={data} />
-        <select
-          onChange={e => {
-            switch (e.target.selectedIndex) {
-              case 0:
-                break
-              case 1:
-                selected && setFilteredData(filterDateByNumber(selected, 7))
-                break
-              case 2:
-                selected && setFilteredData(filterDateByNumber(selected, 30))
-                break
-              default:
-                return selected
-            }
-            setSelectDate(e.target.selectedIndex)
-          }}
-        >
-          <option>All</option>
-          <option>7 Days</option>
-          <option>30 Days</option>
+        <select ref={dateRef} onChange={handleFilterDate}>
+          <option defaultValue>All</option>
+          <option>Last 7 Days</option>
+          <option>Last 30 Days</option>
+          <option>Last 90 Days</option>
         </select>
         <Chart
           selected={selectDate > 0 ? filteredData : selected}

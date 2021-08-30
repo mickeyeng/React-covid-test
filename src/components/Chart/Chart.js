@@ -19,39 +19,30 @@ import {
 } from 'recharts'
 import { format, parseISO, subDays } from 'date-fns'
 import { Container, TooltipContainer } from './Layout'
+import { CustomTooltip } from './CustomTooltip'
 // import { Bar, Line } from 'react-chartjs-2'
 
 export const Chart = ({
   data = [],
   selectedArea = 'Camden',
   selected,
-  selectArea
+  selectArea,
+  filteredData
 }) => {
-  // const [selected, setSelected] = useState([])
-
   const dates = data.map(data => data.date)
   const totalCases = selected.map(data => data.total_cases)
   const newCases = selected.map(data => data.new_cases)
 
-  // const selectArea = input => {
-  //   if (data) {
-  //     const selectedData = data.filter(data => {
-  //       return data.area_name === input
-  //     })
-  //     console.log('selected data', selectedData)
-  //     return setSelected(selectedData)
-  //   }
-
   useEffect(() => {
     selectArea(selectedArea)
-  }, [data])
+  }, [data, filteredData])
 
   console.log('selected', selected)
 
   return (
     // <Container>{lineChart}</Container>
     <Container>
-      <LineChart
+      {/* <LineChart
         width={600}
         height={600}
         data={selected}
@@ -84,22 +75,32 @@ export const Chart = ({
           tickCount={8}
         />
         <Tooltip content={<CustomTooltip />} />
-      </LineChart>
+      </LineChart> */}
+
+      <BarChart width={600} height={600} data={selected}>
+        <CartesianGrid strokeDasharray='3 3' />
+        <XAxis dataKey='dates' />
+        <YAxis />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend />
+        <Bar dataKey='new_cases' fill='#8884d8' />
+        <Bar dataKey='total_cases' fill='#82ca9d' />
+      </BarChart>
     </Container>
   )
 }
 
-const CustomTooltip = ({ active, payload, label }) => {
-  if (active) {
-    return (
-      <TooltipContainer>
-        <h4>{payload.area_name}</h4>
-        <p>{format(parseISO(label), 'eeee, d, MMM, yyyy')}</p>
-        <p>Total Cases: {payload[0].payload.new_cases}</p>
-        <p>New cases: {payload[0].payload.new_cases}</p>
-      </TooltipContainer>
-    )
-  } else {
-    return null
-  }
-}
+// const CustomTooltip = ({ active, payload, label }) => {
+//   if (active) {
+//     return (
+//       <TooltipContainer>
+//         <h4>{payload[0].payload.area_name}</h4>
+//         <p>{format(parseISO(label), 'eeee, d, MMM, yyyy')}</p>
+//         <p>Total Cases: {payload[0].payload.total_cases}</p>
+//         <p>New cases: {payload[0].payload.new_cases}</p>
+//       </TooltipContainer>
+//     )
+//   } else {
+//     return null
+//   }
+// }
