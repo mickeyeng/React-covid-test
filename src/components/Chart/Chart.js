@@ -10,7 +10,7 @@ import {
   Tooltip
 } from 'recharts'
 import { format, parseISO, subDays } from 'date-fns'
-import { Container } from './Layout'
+import { Container, TooltipContainer } from './Layout'
 // import { Bar, Line } from 'react-chartjs-2'
 
 export const Chart = ({
@@ -167,7 +167,7 @@ export const Chart = ({
   return (
     // <Container>{lineChart}</Container>
     <Container>
-      {/* <LineChart
+      <LineChart
         width={600}
         height={600}
         data={selected}
@@ -175,29 +175,13 @@ export const Chart = ({
       >
         <Line type='monotone' dataKey='total_cases' stroke='#8884d8' />
         <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
-        <XAxis dataKey='date' />
-        <YAxis dataKey='total_cases' />
-        <Tooltip />
-      </LineChart> */}
-
-      <AreaChart
-        width={730}
-        height={800}
-        data={selected}
-        margin={{
-          top: 20,
-          right: 20,
-          bottom: 20,
-          left: 20
-        }}
-      >
         <XAxis
           dataKey='date'
-          axisLine={false}
+          axisLine={true}
           tickLine={false}
           tickFormatter={str => {
             const date = parseISO(str)
-            if (date.getDate() % 1 === 0) {
+            if (date.getDate() % 2 === 0) {
               return format(date, 'MMM, d')
             }
             return date
@@ -209,10 +193,23 @@ export const Chart = ({
           tickLine={false}
           tickCount={8}
         />
-        <Area dataKey='total_cases' stroke='#2451b7' />
-        <CartesianGrid stroke='#ccc' opacity={0.1} />
-        <Tooltip />
-      </AreaChart>
+        <Tooltip content={<CustomTooltip />} />
+      </LineChart>
     </Container>
   )
+}
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active) {
+    return (
+      <TooltipContainer>
+        <h4>{payload.area_name}</h4>
+        <p>{format(parseISO(label), 'eeee, d, MMM, yyyy')}</p>
+        <p>Total Cases: {payload[0].payload.new_cases}</p>
+        <p>New cases: {payload[0].payload.new_cases}</p>
+      </TooltipContainer>
+    )
+  } else {
+    return null
+  }
 }
