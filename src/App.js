@@ -22,7 +22,9 @@ function App() {
   const [selected, setSelected] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [selectDate, setSelectDate] = useState()
+  const [selectGraph, setSelectGraph] = useState()
   const dateRef = useRef()
+  const graphRef = useRef()
   let totalCases
 
   const filterDateByNumber = (data = [], n) => {
@@ -120,11 +122,18 @@ function App() {
           <option>Last 30 Days</option>
           <option>Last 90 Days</option>
         </select>
+        <select ref={graphRef} onChange={e => setSelectGraph(e.target.value)}>
+          <option defaultValue>All</option>
+          <option>Line</option>
+          <option>Bar</option>
+          <option>Area</option>
+        </select>
         <Chart
           selected={selectDate > 0 ? filteredData : selected}
           selectArea={selectArea}
           selectedArea={selectedArea}
           data={data}
+          selectGraph={selectGraph}
         />
       </div>
     </Container>

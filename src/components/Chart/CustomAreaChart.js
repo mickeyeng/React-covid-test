@@ -1,9 +1,23 @@
-export const AreaChart = data => {
+import {
+  AreaChart,
+  Area,
+  ReferenceLine,
+  Legend,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer
+} from 'recharts'
+import { format, parseISO } from 'date-fns'
+import { CustomTooltip } from './CustomTooltip'
+
+export const CustomAreaChart = ({ selected }) => {
   return (
     <>
       <AreaChart
-        width={730}
-        height={800}
+        width={600}
+        height={600}
         data={selected}
         margin={{
           top: 20,
