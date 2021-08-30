@@ -20,7 +20,18 @@ function App() {
   const boroughList = data && data.map(data => data.area_name)
   const removeDuplicates = [...new Set(boroughList)]
   const [selected, setSelected] = useState([])
+  const [filteredData, setFilteredData] = useState([])
+  const [selectDate, setSelectDate] = useState()
   let totalCases
+
+  const filterDateByNumber = (data = [], n) => {
+    if (data.length > 1) {
+      return data.slice(data.length - n)
+    }
+    return null
+  }
+
+  console.log('selected dates =', selectDate)
 
   if (selected.length > 1) {
     totalCases = selected[selected.length - 1].total_cases
@@ -86,8 +97,29 @@ function App() {
           handleBoroughPicker={handleBoroughPicker}
         />
         <SearchBar handleSearch={handleSearch} data={data} />
+        <select
+          onChange={e => {
+            switch (e.target.selectedIndex) {
+              case 0:
+                break
+              case 1:
+                selected && setFilteredData(filterDateByNumber(selected, 7))
+                break
+              case 2:
+                selected && setFilteredData(filterDateByNumber(selected, 30))
+                break
+              default:
+                return selected
+            }
+            setSelectDate(e.target.selectedIndex)
+          }}
+        >
+          <option>All</option>
+          <option>7 Days</option>
+          <option>30 Days</option>
+        </select>
         <Chart
-          selected={selected}
+          selected={selectDate > 0 ? filteredData : selected}
           selectArea={selectArea}
           selectedArea={selectedArea}
           data={data}
