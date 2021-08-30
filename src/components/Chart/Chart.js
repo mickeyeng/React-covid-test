@@ -4,10 +4,18 @@ import {
   Area,
   LineChart,
   Line,
+  ReferenceLine,
+  BarChart,
+  Bar,
+  Scatter,
+  Legend,
   CartesianGrid,
   XAxis,
   YAxis,
-  Tooltip
+  ZAxis,
+  ScatterChart,
+  Tooltip,
+  ResponsiveContainer
 } from 'recharts'
 import { format, parseISO, subDays } from 'date-fns'
 import { Container, TooltipContainer } from './Layout'
@@ -40,130 +48,6 @@ export const Chart = ({
 
   console.log('selected', selected)
 
-  const options = {
-    responsive: true,
-    maintainAspectRation: false,
-    plugins: {
-      title: {
-        display: true,
-        text: selectedArea
-      }
-    }
-  }
-
-  const lineGraphOptions = {
-    plugins: {
-      title: {
-        display: true,
-        text: selectedArea,
-        padding: {
-          top: 10,
-          bottom: 30
-        }
-      }
-    },
-    scales: {
-      x: {
-        grid: {
-          display: false,
-          tickColor: 'red'
-        },
-        title: {
-          color: 'red',
-          display: true,
-          text: 'Month'
-        },
-        ticks: {
-          beginAtZero: false,
-          color: 'blue',
-          padding: 12
-        }
-      },
-      y: {
-        grid: {
-          display: false
-        },
-        title: {
-          color: 'red',
-          display: true,
-          text: 'Month'
-        }
-      }
-    }
-  }
-
-  // const lineChart =
-  //   selected.length !== 0 ? (
-  //     <Line
-  //       height='600px'
-  //       width='600px'
-  //       data={{
-  //         // labels: dates,
-  //         labels: selected.map(({ date }) => date),
-
-  //         datasets: [
-  //           {
-  //             data: selected.map(({ new_cases }) => new_cases),
-  //             label: 'New Cases',
-  //             borderColor: 'rgba(255,117,92,1)',
-  //             pointBorderColor: 'rgba(255,255,255,1)',
-  //             pointBackgroundColor: 'rgba(255,255,255,1)',
-  //             borderWidth: 1,
-  //             fill: false
-  //           },
-  //           {
-  //             data: selected.map(({ total_cases }) => total_cases),
-  //             label: 'Total Cases',
-  //             backgroundColor: 'blue',
-  //             borderWidth: 1,
-  //             borderColor: '#98B9AB',
-  //             fill: false
-  //           }
-  //         ]
-  //       }}
-  //       options={lineGraphOptions}
-  //     />
-  //   ) : (
-  //     <p>Loading.....</p>
-  //   )
-
-  // const barChart = (
-  //   <Bar
-  //     height='600px'
-  //     width='600px'
-  //     data={{
-  //       // labels: [`Total Cases in ${selectedArea}`],
-  //       labels: selected.map(({ date }) => date),
-  //       datasets: [
-  //         {
-  //           label: 'Total Cases',
-  //           backgroundColor: 'blue',
-  //           fill: false,
-  //           // data: selected.map(data => {
-  //           //   return data.total_cases
-  //           // })
-  //           data: totalCases
-  //         },
-  //         {
-  //           label: 'New Cases',
-  //           backgroundColor: 'blue',
-  //           fill: false,
-  //           // data: selected.map(data => {
-  //           //   return data.total_cases
-  //           // })
-  //           data: newCases
-  //         }
-  //       ]
-  //     }}
-  //     options={{
-  //       legend: { display: true },
-  //       plugins: {
-  //         title: { display: true, text: selectedArea }
-  //       }
-  //     }}
-  //   />
-  // )
-
   return (
     // <Container>{lineChart}</Container>
     <Container>
@@ -174,10 +58,16 @@ export const Chart = ({
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
       >
         <Line type='monotone' dataKey='total_cases' stroke='#8884d8' />
-        <CartesianGrid stroke='#ccc' strokeDasharray='5 5' />
+        <Line type='monotone' dataKey='new_cases' stroke='#82ca9d' />
+        <CartesianGrid
+          opacity={0.5}
+          vertical={false}
+          stroke='#ccc'
+          strokeDasharray='5 5'
+        />
         <XAxis
           dataKey='date'
-          axisLine={true}
+          axisLine={false}
           tickLine={false}
           tickFormatter={str => {
             const date = parseISO(str)

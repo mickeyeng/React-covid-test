@@ -20,6 +20,13 @@ function App() {
   const boroughList = data && data.map(data => data.area_name)
   const removeDuplicates = [...new Set(boroughList)]
   const [selected, setSelected] = useState([])
+  let totalCases
+
+  if (selected.length > 1) {
+    totalCases = selected[selected.length - 1].total_cases
+  }
+
+  console.log('total cases', totalCases)
 
   const selectArea = input => {
     if (data) {
@@ -69,7 +76,11 @@ function App() {
     <Container>
       <div className='App'>
         <h1>COVID VISUALIZATION</h1>
-        <CasesBox selectedArea={selectedArea} selected={selected} />
+        <CasesBox
+          total={totalCases}
+          selectedArea={selectedArea}
+          selected={selected}
+        />
         <BoroughPicker
           boroughList={removeDuplicates}
           handleBoroughPicker={handleBoroughPicker}
