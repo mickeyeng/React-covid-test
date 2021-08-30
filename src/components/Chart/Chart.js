@@ -40,6 +40,47 @@ export const Chart = ({
     }
   }
 
+  const lineGraphOptions = {
+    plugins: {
+      title: {
+        display: true,
+        text: selectedArea,
+        padding: {
+          top: 10,
+          bottom: 30
+        }
+      }
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+          tickColor: 'red'
+        },
+        title: {
+          color: 'red',
+          display: true,
+          text: 'Month'
+        },
+        ticks: {
+          beginAtZero: false,
+          color: 'blue',
+          padding: 12
+        }
+      },
+      y: {
+        grid: {
+          display: false
+        },
+        title: {
+          color: 'red',
+          display: true,
+          text: 'Month'
+        }
+      }
+    }
+  }
+
   const lineChart =
     selected.length !== 0 ? (
       <Line
@@ -48,12 +89,14 @@ export const Chart = ({
         data={{
           // labels: dates,
           labels: selected.map(({ date }) => date),
+
           datasets: [
             {
               data: selected.map(({ new_cases }) => new_cases),
               label: 'New Cases',
-              backgroundColor: 'red',
-              borderColor: '#98B9AB',
+              borderColor: 'rgba(255,117,92,1)',
+              pointBorderColor: 'rgba(255,255,255,1)',
+              pointBackgroundColor: 'rgba(255,255,255,1)',
               borderWidth: 1,
               fill: false
             },
@@ -67,7 +110,7 @@ export const Chart = ({
             }
           ]
         }}
-        options={options}
+        options={lineGraphOptions}
       />
     ) : (
       <p>Loading.....</p>
@@ -110,5 +153,5 @@ export const Chart = ({
     />
   )
 
-  return <Container>{barChart}</Container>
+  return <Container>{lineChart}</Container>
 }
