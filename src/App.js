@@ -6,6 +6,7 @@ import { Chart } from './components/Chart/Chart'
 import styled from 'styled-components'
 import { BoroughPicker } from './components/BoroughPicker/BoroughPicker'
 import { SearchBar } from './components/SearchBar/SearchBar'
+import { CasesBox } from './components/CasesBox/CasesBox'
 
 const Container = styled.div`
   display: flex;
@@ -16,6 +17,19 @@ const Container = styled.div`
 function App() {
   const [data, setData] = useState([])
   const [selectedArea, setSelectedArea] = useState()
+  const boroughList = data && data.map(data => data.area_name)
+  const removeDuplicates = [...new Set(boroughList)]
+  const [selected, setSelected] = useState([])
+
+  const selectArea = input => {
+    if (data) {
+      const selectedData = data.filter(data => {
+        return data.area_name === input
+      })
+      console.log('selected data', selectedData)
+      return setSelected(selectedData)
+    }
+  }
 
   const handleBoroughPicker = value => setSelectedArea(value)
 
@@ -27,21 +41,26 @@ function App() {
   console.log('selected area', selectedArea)
 
   useEffect(() => {
-    readRemoteFile(dataCSV, {
-      header: true,
-      download: true,
-      skipEmptyLines: true,
-      dynamicTyping: true,
-      encoding: true,
-      // That's what streaming is for. Specify a step callback to receive the results row-by-row. This way, you won't load the whole file into memory and crash the browser.
-      // step: results => setData(results.data),
-      complete: results => {
-        setData(results.data)
-      },
-      error: error => {
-        return error + 'Error with csv, please try again'
-      }
-    })
+    try {
+      readRemoteFile(dataCSV, {
+        header: true,
+        download: true,
+        skipEmptyLines: true,
+        dynamicTyping: true,
+        encoding: true,
+        // That's what streaming is for. Specify a step callback to receive the results row-by-row. This way, you won't load the whole file into memory and crash the browser.
+        // step: results => setData(results.data),
+        complete: results => {
+          setData(results.data)
+        },
+        error: error => {
+          return error + 'Error with csv, please try again'
+        }
+      })
+    } catch (e) {
+      console.log('error fetching data', e)
+    }
+    selectArea(selectedArea)
   }, [selectedArea])
 
   console.log('data', data)
@@ -50,9 +69,18 @@ function App() {
     <Container>
       <div className='App'>
         <h1>COVID VISUALIZATION</h1>
-        <BoroughPicker handleBoroughPicker={handleBoroughPicker} data={data} />
+        <CasesBox selectedArea={selectedArea} selected={selected} />
+        <BoroughPicker
+          boroughList={removeDuplicates}
+          handleBoroughPicker={handleBoroughPicker}
+        />
         <SearchBar handleSearch={handleSearch} data={data} />
-        <Chart selectedArea={selectedArea} data={data} />
+        <Chart
+          selected={selected}
+          selectArea={selectArea}
+          selectedArea={selectedArea}
+          data={data}
+        />
       </div>
     </Container>
   )

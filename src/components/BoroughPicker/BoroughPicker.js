@@ -1,16 +1,7 @@
 import React, { useRef } from 'react'
 
-export const BoroughPicker = ({ data, handleBoroughPicker }) => {
+export const BoroughPicker = ({ handleBoroughPicker, boroughList }) => {
   const selectRef = useRef()
-  const boroughList = data && data.map(data => data.area_name)
-  const removeDuplicates = [...new Set(boroughList)].map(borough => {
-    return (
-      <option defaultValue={borough} key={borough}>
-        {borough}
-      </option>
-    )
-  })
-
   return (
     <div>
       <select
@@ -19,7 +10,13 @@ export const BoroughPicker = ({ data, handleBoroughPicker }) => {
         name=''
         id=''
       >
-        {removeDuplicates}
+        {boroughList.map(borough => {
+          return (
+            <option defaultValue={borough} key={borough}>
+              {borough}
+            </option>
+          )
+        })}
       </select>
     </div>
   )
