@@ -16,8 +16,8 @@ export const CustomAreaChart = ({ selected }) => {
   return (
     <>
       <AreaChart
-        width={600}
-        height={600}
+        width={'100%'}
+        height={'100%'}
         data={selected}
         margin={{
           top: 20,

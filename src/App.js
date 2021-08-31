@@ -7,12 +7,15 @@ import styled from 'styled-components'
 import { BoroughPicker } from './components/BoroughPicker/BoroughPicker'
 import { SearchBar } from './components/SearchBar/SearchBar'
 import { CasesBox } from './components/CasesBox/CasesBox'
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
+import { Sidebar } from './components/Sidebar/Sidebar'
+import {
+  Title,
+  Header,
+  Wrapper,
+  CasesWrapper,
+  Main,
+  SideBarWrapper
+} from './Layout'
 
 function App() {
   const [data, setData] = useState([])
@@ -20,6 +23,7 @@ function App() {
   const boroughList = data && data.map(data => data.area_name)
   const removeDuplicates = [...new Set(boroughList)]
   const [selected, setSelected] = useState([])
+  const [searchData, setSearchData] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [selectDate, setSelectDate] = useState()
   const [selectGraph, setSelectGraph] = useState()
@@ -33,8 +37,6 @@ function App() {
     }
     return null
   }
-
-  console.log('selected dates =', selectDate)
 
   if (selected.length > 1) {
     totalCases = selected[selected.length - 1].total_cases
@@ -79,9 +81,14 @@ function App() {
     return setSelectedArea(value)
   }
 
+  const handleSearchClick = value => {
+    return setSelectedArea(value)
+  }
+
   console.log('selected area', selectedArea)
 
   useEffect(() => {
+    console.log('App component mounted')
     try {
       readRemoteFile(dataCSV, {
         header: true,
@@ -103,14 +110,42 @@ function App() {
   }, [selectedArea])
 
   return (
-    <Container>
+    <Wrapper>
       <div className='App'>
-        <h1>COVID VISUALIZATION</h1>
-        <CasesBox
-          total={totalCases}
-          selectedArea={selectedArea}
-          selected={selected}
-        />
+        <Header>
+          <Title>London Borough 2020 COVID-19 Cases</Title>
+        </Header>
+
+        <CasesWrapper>
+          <CasesBox
+            total={totalCases}
+            selectedArea={selectedArea}
+            selected={selected}
+            statInfo='Total Cases In All Boroughs'
+          />
+          <CasesBox
+            total={totalCases}
+            selectedArea={selectedArea}
+            selected={selected}
+            statInfo='Total New Cases In All Boroughs'
+          />
+        </CasesWrapper>
+        <Main>
+          <SideBarWrapper>
+            <Sidebar
+              handleSearchClick={handleSearchClick}
+              data={removeDuplicates}
+              handleSearch={handleSearch}
+            />
+          </SideBarWrapper>
+          <Chart
+            selected={selectDate > 0 ? filteredData : selected}
+            selectArea={selectArea}
+            selectedArea={selectedArea}
+            data={data}
+            selectGraph={selectGraph}
+          />
+        </Main>
         <BoroughPicker
           boroughList={removeDuplicates}
           handleBoroughPicker={handleBoroughPicker}
@@ -128,15 +163,8 @@ function App() {
           <option>Bar</option>
           <option>Area</option>
         </select>
-        <Chart
-          selected={selectDate > 0 ? filteredData : selected}
-          selectArea={selectArea}
-          selectedArea={selectedArea}
-          data={data}
-          selectGraph={selectGraph}
-        />
       </div>
-    </Container>
+    </Wrapper>
   )
 }
 

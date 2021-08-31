@@ -1,9 +1,18 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
-  display: flex;
+export const StatBox = styled.div`
+  margin-right: 20px;
   padding: 20px;
-  justify-content: space-between;
-  background: black;
-  color: white;
+  text-align: center;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 23px 23px 66px #d9d9d9, -23px -23px 66px #ffffff;
+`
+
+export const StatText = styled.h2`
+  font-size: 18px;
+`
+
+export const StatCount = styled.h2`
+  font-size: 24px;
 `

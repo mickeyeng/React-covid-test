@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Container } from './Layout'
+import { ChartWrapper } from './Layout'
 import { CustomLineChart } from './CustomLineChart'
 import { CustomBarChart } from './CustomBarChart'
 import { CustomAreaChart } from './CustomAreaChart'
@@ -29,5 +29,5 @@ export const Chart = ({
     }
   }
 
-  return <Container>{handleSelectedChart()}</Container>
+  return <ChartWrapper>{handleSelectedChart()}</ChartWrapper>
 }

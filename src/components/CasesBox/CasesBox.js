@@ -1,12 +1,14 @@
-import { Container } from './Layout'
+import { StatBox, StatText, StatCount } from './Layout'
 
-export const CasesBox = ({ total, selectedArea }) => {
+export const CasesBox = ({ total, selectedArea, statInfo }) => {
   //   const totalCases = selected[selected.length - 1].total_cases
 
   return (
-    <Container>
-      <h3>{selectedArea}</h3>
-      <h3>Total Cases: {total}</h3>
-    </Container>
+    <StatBox>
+      <StatText>
+        {statInfo} {selectedArea}
+      </StatText>
+      <StatCount>{total}</StatCount>
+    </StatBox>
   )
 }

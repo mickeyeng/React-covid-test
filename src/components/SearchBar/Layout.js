@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 export const SearchBar = styled.input`
-  margin-top: 20px;
-  width: 100%;
-  padding: 10px;
+  background-color: #ececee;
+  border: none;
+  border-radius: 8px;
+  padding: 4px;
 `
