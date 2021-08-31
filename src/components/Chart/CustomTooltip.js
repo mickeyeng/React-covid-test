@@ -8,10 +8,7 @@ export const CustomTooltip = ({ active, payload, label }) => {
         <h4>
           {payload ? payload[0].payload.area_name : 'Error fetching area name'}
         </h4>
-        <p>
-          {payload[0].payload.date &&
-            format(parseISO(payload[0].payload.date), 'eeee, d, MMM, yyyy')}
-        </p>
+        <p>{label && format(parseISO(label), 'eeee, d, MMM, yyyy')}</p>
         <p>
           Total Cases:{' '}
           {payload
