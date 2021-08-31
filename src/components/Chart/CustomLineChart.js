@@ -1,21 +1,4 @@
-import {
-  AreaChart,
-  Area,
-  LineChart,
-  Line,
-  ReferenceLine,
-  BarChart,
-  Bar,
-  Scatter,
-  Legend,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  ZAxis,
-  ScatterChart,
-  Tooltip,
-  ResponsiveContainer
-} from 'recharts'
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import { CustomTooltip } from './CustomTooltip'
 import { format, parseISO } from 'date-fns'
 

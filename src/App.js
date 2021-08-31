@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { readRemoteFile } from 'react-papaparse'
 import dataCSV from './data/phe_cases_london_boroughs.csv'
 import './App.css'
@@ -14,20 +14,22 @@ import {
   Wrapper,
   CasesWrapper,
   Main,
-  SideBarWrapper
+  SideBarWrapper,
+  SelectWrapper,
+  ChartWrapper,
+  ChartHeader,
+  ChartOptions
 } from './Layout'
-
+import { Select } from './components/Select/Select'
 function App() {
   const [data, setData] = useState([])
-  const [selectedArea, setSelectedArea] = useState()
+  const [selectedArea, setSelectedArea] = useState('Camden')
   const boroughList = data && data.map(data => data.area_name)
   const removeDuplicates = [...new Set(boroughList)]
   const [selected, setSelected] = useState([])
-  const [searchData, setSearchData] = useState([])
   const [filteredData, setFilteredData] = useState([])
-  const [selectDate, setSelectDate] = useState()
   const [selectGraph, setSelectGraph] = useState()
-  const dateRef = useRef()
+  const dateRef = useRef(0)
   const graphRef = useRef()
   let totalCases
 
@@ -43,10 +45,14 @@ function App() {
   }
 
   const handleFilterDate = e => {
-    switch (e.target.selectedIndex) {
+    console.log('selected data handle filter', e.target.selectedIndex)
+    // switch (e.target.selectedIndex) {
+    switch (dateRef.current.selectedIndex) {
       case 0:
+        // setFilteredData(selected)
         break
       case 1:
+        // debugger
         selected && setFilteredData(filterDateByNumber(selected, 7))
         break
       case 2:
@@ -56,24 +62,27 @@ function App() {
         selected && setFilteredData(filterDateByNumber(selected, 90))
         break
       default:
-        return null
+        setFilteredData(selected)
+        return dateRef.current.selectedIndex
     }
-    setSelectDate(e.target.selectedIndex)
   }
 
-  const selectArea = input => {
-    if (data) {
-      const selectedData = data.filter(data => {
-        return data.area_name === input
-      })
-      dateRef.current.selectedIndex = 0
-      return setSelected(selectedData)
-    }
-  }
+  const selectArea = useCallback(
+    input => {
+      if (data) {
+        const selectedData = data.filter(data => {
+          return data.area_name === input
+        })
+        dateRef.current.selectedIndex = 0
+        return setSelected(selectedData)
+      }
+    },
+    [data]
+  )
 
   const handleBoroughPicker = value => {
     setSelectedArea(value)
-    return setSelectDate(0)
+    // return setSelectDate(0)
   }
 
   const handleSearch = value => {
@@ -85,12 +94,10 @@ function App() {
     return setSelectedArea(value)
   }
 
-  console.log('selected area', selectedArea)
-
-  useEffect(() => {
-    console.log('App component mounted')
+  const convertCsvFile = () => {
+    console.log('handle convert function ran with use memo')
     try {
-      readRemoteFile(dataCSV, {
+      return readRemoteFile(dataCSV, {
         header: true,
         download: true,
         skipEmptyLines: true,
@@ -103,11 +110,18 @@ function App() {
           return error + 'Error with csv, please try again'
         }
       })
-    } catch (e) {
-      console.log('error fetching data', e)
+    } catch (error) {
+      return 'Error converting file' + error
     }
+  }
+
+  const memoizedConvertCsvFile = useMemo(convertCsvFile, [])
+
+  useEffect(() => {
+    console.log('App component mounted')
     selectArea(selectedArea)
-  }, [selectedArea])
+    setFilteredData(selected)
+  }, [selectedArea, selectArea, memoizedConvertCsvFile])
 
   return (
     <Wrapper>
@@ -138,31 +152,42 @@ function App() {
               handleSearch={handleSearch}
             />
           </SideBarWrapper>
-          <Chart
-            selected={selectDate > 0 ? filteredData : selected}
-            selectArea={selectArea}
-            selectedArea={selectedArea}
-            data={data}
-            selectGraph={selectGraph}
-          />
+          <ChartWrapper>
+            <SelectWrapper>
+              <ChartHeader>{selectedArea}</ChartHeader>
+              <ChartOptions>
+                <Select
+                  ref={dateRef}
+                  option1='Last 7 Days'
+                  option2='Last 30 Days'
+                  option3='Last 90 Days'
+                  onChange={handleFilterDate}
+                />
+                <Select
+                  ref={graphRef}
+                  option1='Line'
+                  option2='Bar'
+                  option3='Area'
+                  onChange={e => setSelectGraph(e.target.value)}
+                />
+              </ChartOptions>
+            </SelectWrapper>
+            <Chart
+              selected={
+                dateRef.current.selectedIndex > 0 ? filteredData : selected
+              }
+              selectArea={selectArea}
+              selectedArea={selectedArea}
+              data={data}
+              selectGraph={selectGraph}
+            />
+          </ChartWrapper>
         </Main>
-        <BoroughPicker
+        {/* <BoroughPicker
           boroughList={removeDuplicates}
           handleBoroughPicker={handleBoroughPicker}
-        />
-        <SearchBar handleSearch={handleSearch} data={data} />
-        <select ref={dateRef} onChange={handleFilterDate}>
-          <option defaultValue>All</option>
-          <option>Last 7 Days</option>
-          <option>Last 30 Days</option>
-          <option>Last 90 Days</option>
-        </select>
-        <select ref={graphRef} onChange={e => setSelectGraph(e.target.value)}>
-          <option defaultValue>All</option>
-          <option>Line</option>
-          <option>Bar</option>
-          <option>Area</option>
-        </select>
+        /> */}
+        {/* <SearchBar handleSearch={handleSearch} data={data} /> */}
       </div>
     </Wrapper>
   )

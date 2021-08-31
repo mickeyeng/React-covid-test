@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const ChartWrapper = styled.div`
-  margin-top: 20px;
+  /* margin-top: 20px;
   margin-left: 20px;
   min-height: 500px;
   width: 100%;
@@ -9,7 +9,7 @@ export const ChartWrapper = styled.div`
   padding: 15px;
   border-radius: 8x;
   background: #ffffff;
-  box-shadow: 23px 23px 66px #d9d9d9, -23px -23px 66px #ffffff;
+  box-shadow: 23px 23px 66px #d9d9d9, -23px -23px 66px #ffffff; */
 `
 
 export const TooltipContainer = styled.div`

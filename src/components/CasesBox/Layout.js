@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const StatBox = styled.div`
+  width: 250px;
   margin-right: 20px;
   padding: 20px;
   text-align: center;

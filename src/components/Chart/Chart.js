@@ -5,18 +5,17 @@ import { CustomBarChart } from './CustomBarChart'
 import { CustomAreaChart } from './CustomAreaChart'
 
 export const Chart = ({
-  data = [],
   selectedArea = 'Camden',
   selected,
   selectArea,
-  filteredData,
   selectGraph
 }) => {
   useEffect(() => {
     selectArea(selectedArea)
-  }, [data, filteredData])
+  }, [selectedArea, selectArea])
 
-  console.log('selected', selected)
+  console.log()
+
   const handleSelectedChart = () => {
     if (selectGraph === 'Bar') {
       return <CustomBarChart selected={selected} />

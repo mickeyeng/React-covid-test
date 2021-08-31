@@ -20,12 +20,44 @@ export const Wrapper = styled.div`
 export const CasesWrapper = styled.div`
   display: flex;
   margin-top: 20px;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
 `
 
 export const Main = styled.main`
   display: flex;
+  @media (max-width: 480px) {
+    flex-direction: column;
+  }
 `
 
 export const SideBarWrapper = styled.aside`
   margin-top: 20px;
 `
+
+export const SelectWrapper = styled.div`
+  display: flex;
+  padding-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+`
+export const ChartWrapper = styled.section`
+  margin-top: 20px;
+  margin-left: 20px;
+  height: auto;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 15px;
+
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 23px 23px 66px #d9d9d9, -23px -23px 66px #ffffff;
+`
+
+export const ChartHeader = styled.h2`
+  font-size: 22px;
+`
+
+export const ChartOptions = styled.div``

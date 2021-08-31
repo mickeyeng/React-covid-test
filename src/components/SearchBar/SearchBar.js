@@ -12,7 +12,7 @@ export const SearchBar = ({
 
   useEffect(() => {
     console.log('search bar component mounted')
-  }, [])
+  }, [data])
 
   //   data.filter(data => {
 

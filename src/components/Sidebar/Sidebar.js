@@ -8,7 +8,8 @@ export const Sidebar = ({ data, handleSearch, handleSearchClick }) => {
 
   useEffect(() => {
     console.log('Siderbar component mounted')
-  }, [])
+    setSearchData(data)
+  }, [data])
 
   //   const [filteredData, setFilteredData] = useState([])
 

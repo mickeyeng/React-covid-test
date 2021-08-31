@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {
   BarChart,
   Bar,
@@ -9,12 +10,22 @@ import {
   ResponsiveContainer
 } from 'recharts'
 import { CustomTooltip } from './CustomTooltip'
+import { format, parseISO } from 'date-fns'
 
 export const CustomBarChart = ({ selected }) => {
   return (
     <BarChart width={600} height={600} data={selected}>
       <CartesianGrid strokeDasharray='3 3' />
-      <XAxis dataKey='dates' />
+      <XAxis
+        dataKey='date'
+        tickFormatter={str => {
+          const date = parseISO(str)
+          if (date.getDate() % 2 === 0) {
+            return format(date, 'MMM, d')
+          }
+          return date
+        }}
+      />
       <YAxis />
       <Tooltip content={<CustomTooltip />} />
       <Legend />
