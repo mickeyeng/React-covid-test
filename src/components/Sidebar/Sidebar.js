@@ -33,7 +33,9 @@ export const Sidebar = ({ data, handleSearch, handleSearchClick }) => {
     // const totalCases = array[array.length - 1].total_cases
     return (
       <SidebarItem
+        tabIndex={0}
         onClick={e => handleSearchClick(e.target.textContent)}
+        onKeyPress={e => handleSearchClick(e.target.textContent)}
         key={item}
       >
         <SidebarText>

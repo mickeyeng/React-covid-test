@@ -15,6 +15,9 @@ export const Wrapper = styled.div`
   padding-top: 20px;
   max-width: 80vw;
   margin: 0 auto;
+  @media (max-width: 480px) {
+    max-width: 90vw;
+  }
 `
 
 export const CasesWrapper = styled.div`
@@ -39,8 +42,13 @@ export const Main = styled.main`
 `
 
 export const SideBarWrapper = styled.aside`
+  border: 1px solid #5b616e33;
   margin-top: 20px;
   min-width: 250px;
+  border-radius: 8px;
+  @media (max-width: 480px) {
+    width: 100%;
+  }
 `
 
 export const SelectWrapper = styled.div`
@@ -49,8 +57,13 @@ export const SelectWrapper = styled.div`
   padding-bottom: 20px;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 480px) {
+    flex-direction: column;
+    text-align: center;
+  }
 `
 export const ChartWrapper = styled.section`
+  border: 1px solid #5b616e33;
   margin-top: 20px;
   margin-left: 20px;
   height: auto;
@@ -58,13 +71,21 @@ export const ChartWrapper = styled.section`
   background-color: #ffffff;
   padding: 15px;
 
-  border-radius: 12px;
+  border-radius: 8px;
   background: #ffffff;
-  box-shadow: 23px 23px 66px #d9d9d9, -23px -23px 66px #ffffff;
+  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+  box-shadow: rgb(17 17 23 / 20%) 2px 2px 10px;
+
+  @media (max-width: 480px) {
+    margin-left: 0;
+  }
 `
 
 export const ChartHeader = styled.h2`
   font-size: 22px;
+  @media (max-width: 760px) {
+    padding: 5% 0;
+  }
 `
 
 export const ChartOptions = styled.div`

@@ -147,24 +147,28 @@ function App() {
         <CasesWrapper>
           <CasesBox
             total={memoziedTotal}
+            borderColor={'orange'}
             // selectedArea={selectedArea}
             selected={selected}
             statInfo='Total Cases In London'
           />
           <CasesBox
             total={memoziedTotal}
+            borderColor={'green'}
             // selectedArea={selectedArea}
             selected={selected}
             statInfo='Total New Cases in London'
           />
           <CasesBox
             total={totalCases}
+            borderColor={'red'}
             selectedArea={selectedArea}
             selected={selected}
             statInfo='Total Cases In'
           />
           <CasesBox
             total={totalCases}
+            borderColor={'blue'}
             selectedArea={selectedArea}
             selected={selected}
             statInfo='Total New Cases'

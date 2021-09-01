@@ -17,6 +17,6 @@ export const TooltipContainer = styled.div`
   background: #26313c;
   color: #fff;
   padding: 1rem;
-  box-shadow: 15px 30px 40px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   text-align: center;
 `

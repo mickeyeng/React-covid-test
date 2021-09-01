@@ -6,7 +6,8 @@ export const Wrapper = styled.div`
   padding: 20px;
   border-radius: 8px;
   background: #ffffff;
-  box-shadow: 23px 23px 66px #d9d9d9, -23px -23px 66px #ffffff;
+  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
+  box-shadow: rgb(17 17 23 / 20%) 2px 2px 10px;
   overflow-y: scroll;
 `
 export const SearchBar = styled.input`
@@ -20,7 +21,7 @@ export const SidebarItem = styled.div`
   margin: 20px auto;
   display: flex;
   align-items: center;
-  border-bottom: 0.4px solid grey;
+  border-bottom: 0.4px solid #5b616e33;
 `
 
 export const SidebarText = styled.p`

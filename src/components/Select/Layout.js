@@ -18,7 +18,7 @@ export const CustomSelect = styled.select`
 export const SelectDiv = styled.div`
   width: 100%;
   max-width: 30ch;
-  border: 0.4px solid black;
+  border: 1px solid #5b616e33;
   border-radius: 8px;
   padding: 0.25em 0.5em;
   cursor: pointer;
