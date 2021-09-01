@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const StatBox = styled.div`
-  width: 250px;
+  width: 200px;
   margin-right: 20px;
   padding: 20px;
   text-align: center;
@@ -12,8 +12,11 @@ export const StatBox = styled.div`
 
 export const StatText = styled.h2`
   font-size: 18px;
+  padding-bottom: 15px;
+  line-height: 24px;
 `
 
 export const StatCount = styled.h2`
   font-size: 24px;
+  color: #d03737;
 `

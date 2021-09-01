@@ -31,7 +31,9 @@ function App() {
   const [selectGraph, setSelectGraph] = useState()
   const dateRef = useRef(0)
   const graphRef = useRef()
+  const totalCasesRef = useRef()
   let totalCases
+  let totalCasesAllBoroughs
 
   const filterDateByNumber = (data = [], n) => {
     if (data.length > 1) {
@@ -41,8 +43,20 @@ function App() {
   }
 
   if (selected.length > 1) {
+    totalCasesAllBoroughs = data.reduce((acc, curr) => {
+      return acc + curr.total_cases
+    }, 0)
+    // totalCasesRef.current = totalCasesAllBoroughs
     totalCases = selected[selected.length - 1].total_cases
   }
+
+  const memoziedTotal = useMemo(() => {
+    totalCasesRef.current = totalCasesAllBoroughs
+    console.log('rendered')
+    return totalCasesAllBoroughs
+  }, [totalCasesAllBoroughs])
+
+  console.log(totalCasesRef, 'mempzookfdk;d')
 
   const handleFilterDate = e => {
     console.log('selected data handle filter', e.target.selectedIndex)
@@ -132,16 +146,28 @@ function App() {
 
         <CasesWrapper>
           <CasesBox
-            total={totalCases}
-            selectedArea={selectedArea}
+            total={memoziedTotal}
+            // selectedArea={selectedArea}
             selected={selected}
-            statInfo='Total Cases In All Boroughs'
+            statInfo='Total Cases In London'
+          />
+          <CasesBox
+            total={memoziedTotal}
+            // selectedArea={selectedArea}
+            selected={selected}
+            statInfo='Total New Cases in London'
           />
           <CasesBox
             total={totalCases}
             selectedArea={selectedArea}
             selected={selected}
-            statInfo='Total New Cases In All Boroughs'
+            statInfo='Total Cases In'
+          />
+          <CasesBox
+            total={totalCases}
+            selectedArea={selectedArea}
+            selected={selected}
+            statInfo='Total New Cases'
           />
         </CasesWrapper>
         <Main>
@@ -154,6 +180,7 @@ function App() {
           </SideBarWrapper>
           <ChartWrapper>
             <SelectWrapper>
+              <Title>London Borough 2020 COVID-19 Cases</Title>
               <ChartHeader>{selectedArea}</ChartHeader>
               <ChartOptions>
                 <Select

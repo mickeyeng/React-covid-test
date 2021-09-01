@@ -6,7 +6,7 @@ export const Header = styled.header`
 
 export const Title = styled.h1`
   color: black;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   width: 100%;
 `
@@ -20,9 +20,14 @@ export const Wrapper = styled.div`
 export const CasesWrapper = styled.div`
   display: flex;
   margin-top: 20px;
+  justify-content: space-between;
 
   @media (max-width: 480px) {
     flex-direction: column;
+  }
+
+  div:last-child {
+    margin-right: 0;
   }
 `
 
@@ -35,10 +40,12 @@ export const Main = styled.main`
 
 export const SideBarWrapper = styled.aside`
   margin-top: 20px;
+  min-width: 250px;
 `
 
 export const SelectWrapper = styled.div`
   display: flex;
+  margin-top: 5%;
   padding-bottom: 20px;
   justify-content: space-between;
   align-items: center;
@@ -60,4 +67,6 @@ export const ChartHeader = styled.h2`
   font-size: 22px;
 `
 
-export const ChartOptions = styled.div``
+export const ChartOptions = styled.div`
+  display: flex;
+`

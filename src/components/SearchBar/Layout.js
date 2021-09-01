@@ -5,4 +5,5 @@ export const SearchBar = styled.input`
   border: none;
   border-radius: 8px;
   padding: 4px;
+  width: 100%;
 `
