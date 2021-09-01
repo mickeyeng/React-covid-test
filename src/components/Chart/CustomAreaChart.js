@@ -15,12 +15,10 @@ import { CustomTooltip } from './CustomTooltip'
 export const CustomAreaChart = ({ selected }) => {
   // debugger
   return (
-    <div style={{ width: '100%' }}>
+    <>
       <h4>New cases</h4>
       <ResponsiveContainer width='100%' height={300}>
         <AreaChart
-          width={500}
-          height={200}
           data={selected}
           syncId='anyId'
           margin={{
@@ -48,6 +46,8 @@ export const CustomAreaChart = ({ selected }) => {
             dataKey='new_cases'
             stroke='#8884d8'
             fill='#8884d8'
+            dot={{ fill: 'white', strokeWidth: 2 }}
+            activeDot={{ strokeWidth: 0 }}
           />
         </AreaChart>
       </ResponsiveContainer>
@@ -87,6 +87,6 @@ export const CustomAreaChart = ({ selected }) => {
           />
         </AreaChart>
       </ResponsiveContainer>
-    </div>
+    </>
   )
 }

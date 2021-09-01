@@ -5,7 +5,8 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Legend
 } from 'recharts'
 import { CustomTooltip } from './CustomTooltip'
 import { format, parseISO } from 'date-fns'
@@ -14,8 +15,6 @@ export const CustomLineChart = ({ selected }) => {
   return (
     <ResponsiveContainer width='100%' height={600}>
       <LineChart
-        width={600}
-        height={600}
         data={selected}
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
       >
@@ -45,6 +44,7 @@ export const CustomLineChart = ({ selected }) => {
           tickLine={false}
           tickCount={8}
         />
+        <Legend />
         <Tooltip content={<CustomTooltip />} />
       </LineChart>
     </ResponsiveContainer>

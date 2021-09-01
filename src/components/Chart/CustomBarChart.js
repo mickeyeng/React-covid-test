@@ -15,7 +15,7 @@ import { format, parseISO } from 'date-fns'
 export const CustomBarChart = ({ selected }) => {
   return (
     <ResponsiveContainer width='100%' height={600}>
-      <BarChart width={600} height={600} data={selected}>
+      <BarChart data={selected}>
         <CartesianGrid strokeDasharray='3 3' />
         <XAxis
           dataKey='date'
