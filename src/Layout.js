@@ -51,17 +51,30 @@ export const SideBarWrapper = styled.aside`
   }
 `
 
+// export const SelectWrapper = styled.div`
+//   display: flex;
+//   margin-top: 5%;
+//   padding-bottom: 20px;
+//   justify-content: space-between;
+//   align-items: center;
+//   @media (max-width: 480px) {
+//     flex-direction: column;
+//     text-align: center;
+//   }
+// `
+
 export const SelectWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   margin-top: 5%;
   padding-bottom: 20px;
   justify-content: space-between;
-  align-items: center;
   @media (max-width: 480px) {
     flex-direction: column;
     text-align: center;
   }
 `
+
 export const ChartWrapper = styled.section`
   border: 1px solid #5b616e33;
   margin-top: 20px;
@@ -88,6 +101,12 @@ export const ChartHeader = styled.h2`
   }
 `
 
+// export const ChartOptions = styled.div`
+//   display: flex;
+//
+// `
+
 export const ChartOptions = styled.div`
   display: flex;
+  justify-content: flex-end;
 `

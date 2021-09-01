@@ -38,13 +38,13 @@ export const CustomLineChart = ({ selected }) => {
             return date
           }}
         />
+        <Legend />
         <YAxis
           dataKey='total_cases'
           axisLine={false}
           tickLine={false}
           tickCount={8}
         />
-        <Legend />
         <Tooltip content={<CustomTooltip />} />
       </LineChart>
     </ResponsiveContainer>

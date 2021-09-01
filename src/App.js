@@ -21,6 +21,15 @@ import {
   ChartOptions
 } from './Layout'
 import { Select } from './components/Select/Select'
+import { Button } from './components/Button/Button'
+
+const filterDateByNumber = (data = [], n) => {
+  if (data.length > 1) {
+    return data.slice(data.length - n)
+  }
+  return null
+}
+
 function App() {
   const [data, setData] = useState([])
   const [selectedArea, setSelectedArea] = useState('Camden')
@@ -29,18 +38,14 @@ function App() {
   const [selected, setSelected] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [selectGraph, setSelectGraph] = useState()
-  const dateRef = useRef(0)
+
+  const dateRef = useRef(null)
   const graphRef = useRef()
   const totalCasesRef = useRef()
   let totalCases
   let totalCasesAllBoroughs
 
-  const filterDateByNumber = (data = [], n) => {
-    if (data.length > 1) {
-      return data.slice(data.length - n)
-    }
-    return null
-  }
+  console.log('Button ref', dateRef.current)
 
   if (selected.length > 1) {
     totalCasesAllBoroughs = data.reduce((acc, curr) => {
@@ -56,28 +61,26 @@ function App() {
     return totalCasesAllBoroughs
   }, [totalCasesAllBoroughs])
 
-  console.log(totalCasesRef, 'mempzookfdk;d')
-
   const handleFilterDate = e => {
-    console.log('selected data handle filter', e.target.selectedIndex)
-    // switch (e.target.selectedIndex) {
-    switch (dateRef.current.selectedIndex) {
-      case 0:
+    dateRef.current = e.target.textContent.toLowerCase()
+    console.log('date ref current switch', dateRef.current)
+    switch (dateRef.current) {
+      case '':
         // setFilteredData(selected)
         break
-      case 1:
-        // debugger
+      case 'week':
         selected && setFilteredData(filterDateByNumber(selected, 7))
         break
-      case 2:
+      case 'month':
         selected && setFilteredData(filterDateByNumber(selected, 30))
         break
-      case 3:
+      case '3 months':
         selected && setFilteredData(filterDateByNumber(selected, 90))
         break
       default:
         setFilteredData(selected)
-        return dateRef.current.selectedIndex
+        // return dateRef.current.selectedIndex
+        return dateRef.current
     }
   }
 
@@ -87,7 +90,7 @@ function App() {
         const selectedData = data.filter(data => {
           return data.area_name === input
         })
-        dateRef.current.selectedIndex = 0
+        dateRef.current = null
         return setSelected(selectedData)
       }
     },
@@ -188,25 +191,32 @@ function App() {
               <ChartHeader>{selectedArea}</ChartHeader>
               <ChartOptions>
                 <Select
-                  ref={dateRef}
-                  option1='Last 7 Days'
-                  option2='Last 30 Days'
-                  option3='Last 90 Days'
-                  onChange={handleFilterDate}
-                />
-                <Select
                   ref={graphRef}
                   option1='Line'
                   option2='Bar'
                   option3='Area'
                   onChange={e => setSelectGraph(e.target.value)}
                 />
+
+                <Button
+                  ref={dateRef}
+                  text='Week'
+                  handleFilterDate={handleFilterDate}
+                />
+                <Button
+                  ref={dateRef}
+                  text='Month'
+                  handleFilterDate={handleFilterDate}
+                />
+                <Button
+                  ref={dateRef}
+                  text='3 Months'
+                  handleFilterDate={handleFilterDate}
+                />
               </ChartOptions>
             </SelectWrapper>
             <Chart
-              selected={
-                dateRef.current.selectedIndex > 0 ? filteredData : selected
-              }
+              selected={dateRef.current !== null ? filteredData : selected}
               selectArea={selectArea}
               selectedArea={selectedArea}
               data={data}

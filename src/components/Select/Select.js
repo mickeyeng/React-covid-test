@@ -6,7 +6,7 @@ export const Select = forwardRef(
     return (
       <SelectDiv tabIndex={0}>
         <CustomSelect ref={ref} onChange={onChange}>
-          <Option tabIndex={0}>All</Option>
+          {/* <Option tabIndex={0}>All</Option> */}
           <Option tabIndex={0} defaultValue>
             {option1}
           </Option>
