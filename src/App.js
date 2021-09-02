@@ -22,6 +22,7 @@ import {
 } from './Layout'
 import { Select } from './components/Select/Select'
 import { Button } from './components/Button/Button'
+import { ButtonsWrapper } from './Layout'
 
 const filterDateByNumber = (data = [], n) => {
   if (data.length > 1) {
@@ -62,7 +63,9 @@ function App() {
   }, [totalCasesAllBoroughs])
 
   const handleFilterDate = e => {
+    e.target.previousElementSibling.classList.remove('active')
     dateRef.current = e.target.textContent.toLowerCase()
+
     console.log('date ref current switch', dateRef.current)
     switch (dateRef.current) {
       case '':
@@ -70,12 +73,15 @@ function App() {
         break
       case 'week':
         selected && setFilteredData(filterDateByNumber(selected, 7))
+        e.target.previousElementSibling.classList.add('active')
         break
       case 'month':
         selected && setFilteredData(filterDateByNumber(selected, 30))
+        e.target.previousElementSibling.classList.add('active')
         break
       case '3 months':
         selected && setFilteredData(filterDateByNumber(selected, 90))
+        e.target.previousElementSibling.classList.add('active')
         break
       default:
         setFilteredData(selected)
@@ -144,7 +150,7 @@ function App() {
     <Wrapper>
       <div className='App'>
         <Header>
-          <Title>London Borough 2020 COVID-19 Cases</Title>
+          {/* <Title>London Borough 2020 COVID-19 Cases</Title> */}
         </Header>
 
         <CasesWrapper>
@@ -188,8 +194,25 @@ function App() {
           <ChartWrapper>
             <SelectWrapper>
               <Title>London Borough 2020 COVID-19 Cases</Title>
-              <ChartHeader>{selectedArea}</ChartHeader>
+
               <ChartOptions>
+                <ButtonsWrapper>
+                  <Button
+                    ref={dateRef}
+                    text='Week'
+                    handleFilterDate={handleFilterDate}
+                  />
+                  <Button
+                    ref={dateRef}
+                    text='Month'
+                    handleFilterDate={handleFilterDate}
+                  />
+                  <Button
+                    ref={dateRef}
+                    text='3 Months'
+                    handleFilterDate={handleFilterDate}
+                  />
+                </ButtonsWrapper>
                 <Select
                   ref={graphRef}
                   option1='Line'
@@ -197,23 +220,8 @@ function App() {
                   option3='Area'
                   onChange={e => setSelectGraph(e.target.value)}
                 />
-
-                <Button
-                  ref={dateRef}
-                  text='Week'
-                  handleFilterDate={handleFilterDate}
-                />
-                <Button
-                  ref={dateRef}
-                  text='Month'
-                  handleFilterDate={handleFilterDate}
-                />
-                <Button
-                  ref={dateRef}
-                  text='3 Months'
-                  handleFilterDate={handleFilterDate}
-                />
               </ChartOptions>
+              <ChartHeader>{selectedArea}</ChartHeader>
             </SelectWrapper>
             <Chart
               selected={dateRef.current !== null ? filteredData : selected}

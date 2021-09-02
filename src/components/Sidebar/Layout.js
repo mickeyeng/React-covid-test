@@ -2,12 +2,9 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   height: 800px;
-  background-color: #ffffff;
-  padding: 20px;
+  /* background-color: #ffffff; */
+  padding: 0 20px 20px 20px;
   border-radius: 8px;
-  background: #ffffff;
-  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
-  box-shadow: rgb(17 17 23 / 20%) 2px 2px 10px;
   overflow-y: scroll;
 `
 export const SearchBar = styled.input`

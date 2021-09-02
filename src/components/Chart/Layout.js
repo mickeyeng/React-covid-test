@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const ChartWrapper = styled.div`
+  /* display: flex; */
   /* margin-top: 20px;
   margin-left: 20px;
   min-height: 500px;

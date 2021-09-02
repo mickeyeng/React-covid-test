@@ -5,6 +5,7 @@ export const Header = styled.header`
 `
 
 export const Title = styled.h1`
+  padding: 5% 0 5% 0;
   color: black;
   font-size: 22px;
   font-weight: 700;
@@ -42,6 +43,9 @@ export const Main = styled.main`
 `
 
 export const SideBarWrapper = styled.aside`
+  padding: 5% 0 5% 0;
+  box-shadow: rgb(17 17 23 / 20%) 2px 2px 10px;
+  background-color: '#ffffff';
   border: 1px solid #5b616e33;
   margin-top: 20px;
   min-width: 250px;
@@ -66,7 +70,7 @@ export const SideBarWrapper = styled.aside`
 export const SelectWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 5%;
+  /* margin-top: 5%; */
   padding-bottom: 20px;
   justify-content: space-between;
   @media (max-width: 480px) {
@@ -95,7 +99,8 @@ export const ChartWrapper = styled.section`
 `
 
 export const ChartHeader = styled.h2`
-  font-size: 22px;
+  padding-bottom: 2%;
+  font-size: 18px;
   @media (max-width: 760px) {
     padding: 5% 0;
   }
@@ -107,6 +112,16 @@ export const ChartHeader = styled.h2`
 // `
 
 export const ChartOptions = styled.div`
+  padding-bottom: 5%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  @media (max-width: 760px) {
+    flex-direction: column;
+  }
+`
+export const ButtonsWrapper = styled.div`
+  display: flex;
+  @media (max-width: 760px) {
+    padding-bottom: 5%;
+  }
 `
