@@ -15,7 +15,7 @@ import { format, parseISO } from 'date-fns'
 export const CustomBarChart = ({ selected }) => {
   return (
     <ResponsiveContainer width='100%' height={600}>
-      <BarChart width={600} height={600} data={selected}>
+      <BarChart data={selected}>
         <CartesianGrid strokeDasharray='3 3' />
         <XAxis
           dataKey='date'
@@ -30,7 +30,7 @@ export const CustomBarChart = ({ selected }) => {
         <YAxis />
         <Tooltip content={<CustomTooltip />} />
         <Legend />
-        <Bar dataKey='new_cases' fill='#8884d8' />
+        <Bar dataKey='new_cases' fill='#0F52BA' />
         <Bar dataKey='total_cases' fill='#82ca9d' />
       </BarChart>
     </ResponsiveContainer>
