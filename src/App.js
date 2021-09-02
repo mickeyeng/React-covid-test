@@ -3,14 +3,12 @@ import { readRemoteFile } from 'react-papaparse'
 import dataCSV from './data/phe_cases_london_boroughs.csv'
 import './App.css'
 import { Chart } from './components/Chart/Chart'
-import styled from 'styled-components'
-import { BoroughPicker } from './components/BoroughPicker/BoroughPicker'
-import { SearchBar } from './components/SearchBar/SearchBar'
 import { CasesBox } from './components/CasesBox/CasesBox'
 import { Sidebar } from './components/Sidebar/Sidebar'
+import { ThemeProvider } from 'styled-components'
+import { GlobalStyle } from './Layout'
 import {
   Title,
-  Header,
   Wrapper,
   CasesWrapper,
   Main,
@@ -39,53 +37,64 @@ function App() {
   const [selected, setSelected] = useState([])
   const [filteredData, setFilteredData] = useState([])
   const [selectGraph, setSelectGraph] = useState()
-
   const dateRef = useRef(null)
   const graphRef = useRef()
   const totalCasesRef = useRef()
+  const totalNewCasesRef = useRef()
   let totalCases
+  let totalNewCases
   let totalCasesAllBoroughs
-
-  console.log('Button ref', dateRef.current)
+  let totalNewCasesAllBoroughs
 
   if (selected.length > 1) {
     totalCasesAllBoroughs = data.reduce((acc, curr) => {
       return acc + curr.total_cases
     }, 0)
-    // totalCasesRef.current = totalCasesAllBoroughs
+    totalNewCasesAllBoroughs = data.reduce((acc, curr) => {
+      return acc + curr.new_cases
+    }, 0)
     totalCases = selected[selected.length - 1].total_cases
+    totalNewCases = selected[selected.length - 1].new_cases
   }
 
-  const memoziedTotal = useMemo(() => {
+  const memoizedTotal = useMemo(() => {
     totalCasesRef.current = totalCasesAllBoroughs
     console.log('rendered')
     return totalCasesAllBoroughs
   }, [totalCasesAllBoroughs])
 
-  const handleFilterDate = e => {
-    e.target.previousElementSibling.classList.remove('active')
-    dateRef.current = e.target.textContent.toLowerCase()
+  const memoizedTotalNew = useMemo(() => {
+    totalNewCasesRef.current = totalNewCasesAllBoroughs
+    return totalNewCasesAllBoroughs
+  }, [totalNewCasesAllBoroughs])
 
-    console.log('date ref current switch', dateRef.current)
+  const handleFilterDate = e => {
+    const buttonStyle = e.target.style
+    for (let el of e.target.parentElement.children) {
+      el.style.background = 'white'
+      el.style.border = '1px solid #5b616e33'
+    }
+    dateRef.current = e.target.textContent.toLowerCase()
     switch (dateRef.current) {
       case '':
-        // setFilteredData(selected)
         break
       case 'week':
         selected && setFilteredData(filterDateByNumber(selected, 7))
-        e.target.previousElementSibling.classList.add('active')
+        buttonStyle.backgroundColor = '#5b616e17'
+        buttonStyle.border = '1px solid black'
         break
       case 'month':
         selected && setFilteredData(filterDateByNumber(selected, 30))
-        e.target.previousElementSibling.classList.add('active')
+        buttonStyle.backgroundColor = '#5b616e17'
+        buttonStyle.border = '1px solid black'
         break
       case '3 months':
         selected && setFilteredData(filterDateByNumber(selected, 90))
-        e.target.previousElementSibling.classList.add('active')
+        buttonStyle.backgroundColor = '#5b616e17'
+        buttonStyle.border = '1px solid black'
         break
       default:
         setFilteredData(selected)
-        // return dateRef.current.selectedIndex
         return dateRef.current
     }
   }
@@ -103,14 +112,13 @@ function App() {
     [data]
   )
 
-  const handleBoroughPicker = value => {
-    setSelectedArea(value)
-    // return setSelectDate(0)
-  }
-
   const handleSearch = value => {
-    console.log('selected area handle', selectedArea)
-    return setSelectedArea(value)
+    const term = value.charAt(0).toUpperCase() + value.slice(1)
+    if (removeDuplicates.includes(term)) {
+      return setSelectedArea(term)
+    } else {
+      alert('London Borough does not exist. Please try again')
+    }
   }
 
   const handleSearchClick = value => {
@@ -141,46 +149,41 @@ function App() {
   const memoizedConvertCsvFile = useMemo(convertCsvFile, [])
 
   useEffect(() => {
-    console.log('App component mounted')
     selectArea(selectedArea)
     setFilteredData(selected)
   }, [selectedArea, selectArea, memoizedConvertCsvFile])
 
   return (
-    <Wrapper>
-      <div className='App'>
-        <Header>
-          {/* <Title>London Borough 2020 COVID-19 Cases</Title> */}
-        </Header>
-
+    <div className='App'>
+      <GlobalStyle />
+      <Wrapper>
         <CasesWrapper>
           <CasesBox
-            total={memoziedTotal}
+            total={memoizedTotal}
             borderColor={'orange'}
-            // selectedArea={selectedArea}
             selected={selected}
             statInfo='Total Cases In London'
           />
           <CasesBox
-            total={memoziedTotal}
+            totalNew={memoizedTotalNew}
             borderColor={'green'}
-            // selectedArea={selectedArea}
             selected={selected}
-            statInfo='Total New Cases in London'
+            statInfo='New Cases in London'
           />
           <CasesBox
             total={totalCases}
             borderColor={'red'}
             selectedArea={selectedArea}
             selected={selected}
-            statInfo='Total Cases In'
+            statInfo='Total Cases in'
           />
           <CasesBox
-            total={totalCases}
+            total={totalNewCases}
             borderColor={'blue'}
             selectedArea={selectedArea}
             selected={selected}
-            statInfo='Total New Cases'
+            statInfo='New Cases in'
+            newCases
           />
         </CasesWrapper>
         <Main>
@@ -194,7 +197,6 @@ function App() {
           <ChartWrapper>
             <SelectWrapper>
               <Title>London Borough 2020 COVID-19 Cases</Title>
-
               <ChartOptions>
                 <ButtonsWrapper>
                   <Button
@@ -232,13 +234,8 @@ function App() {
             />
           </ChartWrapper>
         </Main>
-        {/* <BoroughPicker
-          boroughList={removeDuplicates}
-          handleBoroughPicker={handleBoroughPicker}
-        /> */}
-        {/* <SearchBar handleSearch={handleSearch} data={data} /> */}
-      </div>
-    </Wrapper>
+      </Wrapper>
+    </div>
   )
 }
 
