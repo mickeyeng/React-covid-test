@@ -30,7 +30,7 @@ export const CustomBarChart = ({ selected }) => {
         <YAxis />
         <Tooltip content={<CustomTooltip />} />
         <Legend />
-        <Bar dataKey='new_cases' fill='#8884d8' />
+        <Bar dataKey='new_cases' fill='#0F52BA' />
         <Bar dataKey='total_cases' fill='#82ca9d' />
       </BarChart>
     </ResponsiveContainer>

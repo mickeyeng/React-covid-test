@@ -44,8 +44,8 @@ export const CustomAreaChart = ({ selected }) => {
           <Area
             type='monotone'
             dataKey='new_cases'
-            stroke='#8884d8'
-            fill='#8884d8'
+            stroke='#0F52BA'
+            fill='#0F52BA'
             dot={{ fill: 'white', strokeWidth: 2 }}
             activeDot={{ strokeWidth: 0 }}
           />
