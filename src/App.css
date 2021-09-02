@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&display=swap');
 
-*,
+/* *,
 *::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
+} */
 
-body {
+/* body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -16,4 +16,4 @@ body {
   background-color: '#F6F8F9';
   letter-spacing: 1.2px;
   line-height: 1.4;
-}
+} */
