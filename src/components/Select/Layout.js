@@ -8,7 +8,7 @@ export const CustomSelect = styled.select`
   padding: 0 2.5em 0 0;
   margin: 0;
   font-family: inherit;
-  font-size: inherit;
+  font-size: var(--small-font-size);
   cursor: inherit;
   line-height: inherit;
   outline: none;
@@ -22,7 +22,7 @@ export const SelectDiv = styled.div`
   min-width: 100px;
   max-width: 30ch;
   border: 1px solid #5b616e33;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   padding: 1.25em 0.5em;
   cursor: pointer;
   line-height: 1.1;

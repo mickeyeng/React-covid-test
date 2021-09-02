@@ -1,13 +1,13 @@
 import styled from 'styled-components'
 
 export const ButtonWrapper = styled.button`
-  background-color: #ffffff;
+  background: #ffffff;
   display: flex;
   align-items: center;
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: var(--border-radius);
+  padding: var(--spacing-normal);
   border: 1px solid #5b616e33;
-  margin-left: 8px;
+  margin-left: var(--spacing-small);
   -webkit-transition: all 0.5s 0s ease;
   -moz-transition: all 0.5s 0s ease;
   -o-transition: all 0.5s 0s ease;
@@ -15,31 +15,16 @@ export const ButtonWrapper = styled.button`
   outline: none;
 
   :hover {
-    background-color: #5b616e17;
+    background-color: var(--grey);
     border: 1px solid black;
   }
 
   :focus {
-    /* background-color: #5b616e17; */
-    /* border: 1px solid black; */
+    background-color: var(--grey);
+    border: 1px solid black;
   }
 
   :first-child {
     margin-left: 0;
   }
-
-  /* button {
-    background-color: white;
-    border: none;
-    padding: 8px;
-  } */
-
-  .active {
-    background-color: #5b616e17;
-    border: 1px solid black;
-  }
-`
-
-export const ButtonText = styled.p`
-  font-size: 16px;
 `
