@@ -11,26 +11,7 @@ export const Sidebar = ({ data, handleSearch, handleSearchClick }) => {
     setSearchData(data)
   }, [data])
 
-  //   const [filteredData, setFilteredData] = useState([])
-
-  //   data.filter(data => {
-  //     if (searchTerm === '') {
-  //       return data
-  //     } else if (data.toLowerCase().includes(searchTerm.toLowerCase())) {
-  //       return data
-  //     }
-  //   })
-
-  //   const handleFilteredData = e => {
-  //     const searchWord = e.target.value
-  //     const filterArr = data.filter(data => {
-  //       return data.toLowerCase().includes(searchWord.toLowerCase())
-  //     })
-  //     setFilteredData(filterArr)
-  //   }
-
   const boroughOption = searchData.map((item, index, array) => {
-    // const totalCases = array[array.length - 1].total_cases
     return (
       <SidebarItem
         tabIndex={0}
