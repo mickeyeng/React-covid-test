@@ -1,11 +1,10 @@
-import { LegendWrapper, LegendKey } from './Layout'
+import { LegendWrapper } from './Layout'
 
 export const renderLegend = props => {
   const { payload } = props
   return (
-    <ul>
+    <>
       {payload.map((entry, index) => {
-        // debugger
         const caseName =
           entry.dataKey.split('_').join(' ').charAt(0).toUpperCase() +
           entry.dataKey.split('_').join(' ').slice(1)
@@ -15,6 +14,6 @@ export const renderLegend = props => {
           </LegendWrapper>
         )
       })}
-    </ul>
+    </>
   )
 }

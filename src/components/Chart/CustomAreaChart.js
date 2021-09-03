@@ -1,7 +1,6 @@
 import {
   AreaChart,
   Area,
-  ReferenceLine,
   Legend,
   CartesianGrid,
   XAxis,
@@ -11,9 +10,9 @@ import {
 } from 'recharts'
 import { format, parseISO } from 'date-fns'
 import { CustomTooltip } from './CustomTooltip'
+import { renderLegend } from './CustomLegend'
 
 export const CustomAreaChart = ({ selected }) => {
-  // debugger
   return (
     <>
       <h4>New cases</h4>
@@ -45,10 +44,11 @@ export const CustomAreaChart = ({ selected }) => {
             type='monotone'
             dataKey='new_cases'
             stroke='#0F52BA'
-            fill='#0F52BA'
+            fill='#d03737'
             dot={{ fill: 'white', strokeWidth: 2 }}
             activeDot={{ strokeWidth: 0 }}
           />
+          <Legend content={renderLegend} />
         </AreaChart>
       </ResponsiveContainer>
       <h4>Total Cases</h4>
@@ -85,6 +85,7 @@ export const CustomAreaChart = ({ selected }) => {
             stroke='#82ca9d'
             fill='#d03737'
           />
+          <Legend content={renderLegend} />
         </AreaChart>
       </ResponsiveContainer>
     </>
