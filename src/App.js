@@ -5,7 +5,6 @@ import './App.css'
 import { Chart } from './components/Chart/Chart'
 import { CasesBox } from './components/CasesBox/CasesBox'
 import { Sidebar } from './components/Sidebar/Sidebar'
-import { ThemeProvider } from 'styled-components'
 import { GlobalStyle } from './Layout'
 import {
   Title,
@@ -40,18 +39,13 @@ function App() {
   const dateRef = useRef(null)
   const graphRef = useRef()
   const totalCasesRef = useRef()
-  const totalNewCasesRef = useRef()
   let totalCases
   let totalNewCases
   let totalCasesAllBoroughs
-  let totalNewCasesAllBoroughs
 
   if (selected.length > 1) {
     totalCasesAllBoroughs = data.reduce((acc, curr) => {
       return acc + curr.total_cases
-    }, 0)
-    totalNewCasesAllBoroughs = data.reduce((acc, curr) => {
-      return acc + curr.new_cases
     }, 0)
     totalCases = selected[selected.length - 1].total_cases
     totalNewCases = selected[selected.length - 1].new_cases
@@ -59,14 +53,8 @@ function App() {
 
   const memoizedTotal = useMemo(() => {
     totalCasesRef.current = totalCasesAllBoroughs
-    console.log('rendered')
     return totalCasesAllBoroughs
   }, [totalCasesAllBoroughs])
-
-  const memoizedTotalNew = useMemo(() => {
-    totalNewCasesRef.current = totalNewCasesAllBoroughs
-    return totalNewCasesAllBoroughs
-  }, [totalNewCasesAllBoroughs])
 
   const handleFilterDate = e => {
     const buttonStyle = e.target.style
@@ -126,7 +114,6 @@ function App() {
   }
 
   const convertCsvFile = () => {
-    console.log('handle convert function ran with use memo')
     try {
       return readRemoteFile(dataCSV, {
         header: true,
@@ -163,12 +150,6 @@ function App() {
             borderColor={'orange'}
             selected={selected}
             statInfo='Total Cases In London'
-          />
-          <CasesBox
-            totalNew={memoizedTotalNew}
-            borderColor={'green'}
-            selected={selected}
-            statInfo='New Cases in London'
           />
           <CasesBox
             total={totalCases}
