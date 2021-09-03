@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 
 export const StatBox = styled.div`
-  border-top: 4px solid red;
-  border: 1px solid #5b616e33;
+  border-top: 5px solid var(--green);
   margin-right: 20px;
   padding: 20px;
   text-align: center;
@@ -12,7 +11,7 @@ export const StatBox = styled.div`
   -webkit-transition: all 0.5s 0s ease;
   -moz-transition: all 0.5s 0s ease;
   -o-transition: all 0.5s 0s ease;
-  transition: all 0.5s 0s ease;
+  transition: all 80ms ease-in-out 0s;
 
   @media (max-width: 480px) {
     margin: 10px auto;
@@ -28,5 +27,5 @@ export const StatText = styled.h2`
 
 export const StatCount = styled.h2`
   font-size: var(--large-font-size);
-  color: var(--stat-color);
+  color: var(--primary);
 `

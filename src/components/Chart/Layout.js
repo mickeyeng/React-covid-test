@@ -14,3 +14,17 @@ export const TooltipContainer = styled.div`
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   text-align: center;
 `
+
+export const LegendWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  padding-top: 10px;
+  display: inline;
+  margin: 2px;
+
+  p {
+    padding: 8px;
+  }
+`

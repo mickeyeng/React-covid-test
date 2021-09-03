@@ -3,13 +3,14 @@ import styled, { createGlobalStyle } from 'styled-components'
 export const GlobalStyle = createGlobalStyle`
 
 :root {
-  // ******** Colors ********
+  // ******** Colours ********
   --white: #ffffff;
   --grey: #5b616e33;
   --stat-color: #d03737;
-  
-
-  // ******** Colors ********
+  --background-color: rgb(0 82 255 / 2%);
+  --primary: rgba(0,82,255, 0.8);
+  --green: rgb(130, 202, 157);
+  // ******** Colours ********
   
   // ******** Font ********
   --x-small-font-size: 1.3rem;
@@ -23,9 +24,9 @@ export const GlobalStyle = createGlobalStyle`
   --spacing-normal: 1.5rem;
   --spacing-large: 3rem;
   --spacing-x-large: 5rem;
-  --border-radius: 8px;
   // ******** Spacing ********
-
+  
+  --border-radius: 6px;
 }
 
   *,
@@ -45,14 +46,11 @@ body {
   padding: 0;
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
-  background-color: '#F6F8F9';
+  background-color: var(--background-color);
   letter-spacing: 1.2px;
   line-height: 1.4;
 }
-
-
 `
-
 export const Header = styled.header`
   display: flex;
 `
@@ -63,13 +61,14 @@ export const Title = styled.h1`
   font-size: var(--large-font-size);
   font-weight: 700;
   width: 100%;
+  position: relative;
 `
 
 export const Wrapper = styled.div`
   padding-top: var(--spacing-large);
-  /* max-width: 80vw; */
   max-width: 80%;
   margin: 0 auto;
+
   @media (max-width: 480px) {
     max-width: 90vw;
   }
@@ -100,6 +99,7 @@ export const Main = styled.main`
 `
 
 export const SideBarWrapper = styled.aside`
+  background-color: var(--white);
   padding: var(--spacing-x-large) 0 var(--spacing-x-large) 0;
   box-shadow: rgb(17 17 23 / 20%) 2px 2px 10px;
   background-color: '#ffffff';
@@ -117,6 +117,7 @@ export const SelectWrapper = styled.div`
   flex-direction: column;
   padding-bottom: var(--spacing-large);
   justify-content: space-between;
+
   @media (max-width: 480px) {
     flex-direction: column;
     text-align: center;
@@ -131,10 +132,8 @@ export const ChartWrapper = styled.section`
   width: 100%;
   background-color: #ffffff;
   padding: var(--spacing-normal);
-
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   background: #ffffff;
-  /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
   box-shadow: rgb(17 17 23 / 20%) 2px 2px 10px;
 
   @media (max-width: 480px) {
@@ -145,8 +144,18 @@ export const ChartWrapper = styled.section`
 export const ChartHeader = styled.h2`
   padding-bottom: var(--spacing-normal);
   font-size: var(--medium-font-size);
+  position: relative;
   @media (max-width: 760px) {
     padding: var(--spacing-x-large) 0;
+  }
+
+  ::before {
+    content: '';
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    background: var(--grey);
+    bottom: 5px;
   }
 `
 
