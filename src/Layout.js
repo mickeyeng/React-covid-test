@@ -145,9 +145,6 @@ export const ChartHeader = styled.h2`
   padding-bottom: var(--spacing-normal);
   font-size: var(--medium-font-size);
   position: relative;
-  @media (max-width: 760px) {
-    padding: var(--spacing-x-large) 0;
-  }
 
   ::before {
     content: '';
@@ -156,6 +153,14 @@ export const ChartHeader = styled.h2`
     position: absolute;
     background: var(--grey);
     bottom: 5px;
+  }
+
+  @media (max-width: 760px) {
+    padding: var(--spacing-x-large) 0;
+
+    ::before {
+      display: none;
+    }
   }
 `
 
