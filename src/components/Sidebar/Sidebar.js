@@ -3,11 +3,9 @@ import { Wrapper, SidebarItem, SidebarText } from './Layout'
 import { SearchBar } from '../SearchBar/SearchBar'
 
 export const Sidebar = ({ data, handleSearch, handleSearchClick }) => {
-  const [searchTerm, setSearchTerm] = useState('')
   const [searchData, setSearchData] = useState([])
 
   useEffect(() => {
-    console.log('Siderbar component mounted')
     setSearchData(data)
   }, [data])
 
@@ -19,10 +17,7 @@ export const Sidebar = ({ data, handleSearch, handleSearchClick }) => {
         onKeyPress={e => handleSearchClick(e.target.textContent)}
         key={item}
       >
-        <SidebarText>
-          {item}
-          {/* <span>5,44434</span> */}
-        </SidebarText>
+        <SidebarText>{item}</SidebarText>
       </SidebarItem>
     )
   })
