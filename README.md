@@ -4,7 +4,7 @@
 https://covid-19-react-application-mickey-english.netlify.app/
 
 ## Brief
-Produce a pice of work that visualises the number of Covid 19 cases across London over time.
+Produce a piece of work that visualises the number of Covid 19 cases across London over time.
 
 ### How to run the application on Mac, Linux and Windows  
 
