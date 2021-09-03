@@ -83,7 +83,7 @@ export const CustomAreaChart = ({ selected }) => {
             type='monotone'
             dataKey='total_cases'
             stroke='#82ca9d'
-            fill='#82ca9d'
+            fill='#d03737'
           />
         </AreaChart>
       </ResponsiveContainer>

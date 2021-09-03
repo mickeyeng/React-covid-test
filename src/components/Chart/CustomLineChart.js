@@ -10,18 +10,19 @@ import {
 } from 'recharts'
 import { CustomTooltip } from './CustomTooltip'
 import { format, parseISO } from 'date-fns'
+import { renderLegend } from './CustomLegend'
 
 export const CustomLineChart = ({ selected }) => {
   return (
     <ResponsiveContainer width='100%' height={600}>
       <LineChart
         data={selected}
-        margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
+        margin={{ top: 5, right: 5, bottom: 10, left: 0 }}
       >
         <Line type='monotone' dataKey='total_cases' stroke='#0F52BA' />
         <Line type='monotone' dataKey='new_cases' stroke='#82ca9d' />
         <CartesianGrid
-          opacity={0.5}
+          opacity={0.4}
           vertical={false}
           stroke='#ccc'
           strokeDasharray='5 5'
@@ -38,7 +39,7 @@ export const CustomLineChart = ({ selected }) => {
             return date
           }}
         />
-        <Legend />
+        <Legend content={renderLegend} />
         <YAxis
           dataKey='total_cases'
           axisLine={false}

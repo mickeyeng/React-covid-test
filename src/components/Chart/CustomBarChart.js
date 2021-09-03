@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import {
   BarChart,
   Bar,
@@ -11,6 +10,7 @@ import {
 } from 'recharts'
 import { CustomTooltip } from './CustomTooltip'
 import { format, parseISO } from 'date-fns'
+import { renderLegend } from './CustomLegend'
 
 export const CustomBarChart = ({ selected }) => {
   return (
@@ -29,9 +29,9 @@ export const CustomBarChart = ({ selected }) => {
         />
         <YAxis />
         <Tooltip content={<CustomTooltip />} />
-        <Legend />
+        <Legend content={renderLegend} />
         <Bar dataKey='new_cases' fill='#0F52BA' />
-        <Bar dataKey='total_cases' fill='#82ca9d' />
+        <Bar dataKey='total_cases' fill='#d03737' />
       </BarChart>
     </ResponsiveContainer>
   )
